@@ -62,9 +62,6 @@ mar10_NAdata <- read.csv("~/Desktop/Gibert_lab_project/data/Flow_Cyt_Data/NA_Val
 colnames(mar10_NAdata) <-  c("id", "FSC_H", "SSC_H","FITC_H", "PE_H", "PerCP_H", "APC_H","FSC_A","SSC_A","FITC_A", "PE_A", "PerCP_A",
                              "APC_A","Width","Time", "temp", "ab", "rep","gate", "controlrep" )
 
-## Load updated TPC data for two-strain competition experiment 
-tpcs_exp <- read.csv("~/Desktop/Gibert_lab_project/data/compexptpc.csv")
-
 ### FIGURE 2 --------------------------
 
 ## Process TPC data from 22 genotypes
