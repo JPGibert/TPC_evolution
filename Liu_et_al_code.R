@@ -51,7 +51,7 @@ tpc_exp_pred <- read.csv("~/Desktop/Gibert_lab_project/data/two_clone_TPC.csv") 
 tpc_exp_pred$Clone[tpc_exp_pred$Clone =="CU416"] <- "CU4106"
 
 ## Load data from competition experiment between genotypes AXS and CU4106. 
-# Uncomplied data available in file "Flow_Cyt_Data.zip"
+# Uncompiled data available in file "Flow_Cyt_Data.zip"
 # YFP indicates individuals that were "gated" or captured as strain AXS by flow cytometry
 # AutoF indicates individuals that were "gated" or captured as strain CU4106 by flow cytometry
 mar10data <- read.csv("~/Desktop/Gibert_lab_project/data/FlowCytData.csv")
