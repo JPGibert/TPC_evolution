@@ -51,7 +51,7 @@ tpc_exp_pred <- read.csv("~/Desktop/Gibert_lab_project/data/two_clone_TPC.csv") 
 tpc_exp_pred$Clone[tpc_exp_pred$Clone =="CU416"] <- "CU4106"
 
 ## Load data from competition experiment between genotypes AXS and CU4106. 
-# Uncompiled data available in file "Flow_Cyt_Data.zip"
+# Non-compiled data available in file "Flow_Cyt_Data.zip"
 # YFP indicates individuals that were "gated" or captured as strain AXS by flow cytometry
 # AutoF indicates individuals that were "gated" or captured as strain CU4106 by flow cytometry
 mar10data <- read.csv("~/Desktop/Gibert_lab_project/data/FlowCytData.csv")
@@ -380,7 +380,6 @@ dt_sum0$rep <- as.factor(dt_sum0$rep)
 dt_sum0$ab <- as.factor(dt_sum0$ab)
 # Remove irrelevant fluorescent microscopy variables collected
 dt_sum <- dt_sum0[-c(7:18)] 
-view(dt_sum)
 
 ### Controls: proportions 
 # Calculate proportions of each genotype (AXS, denoted as "ControlYFP" and CU4106, denoted as "ControlCU")
@@ -455,8 +454,8 @@ total_final2 <- total_final %>%
   summarise(avg = mean(proportion)) %>% 
   mutate(antibiotics = case_when(ab == "AB" ~ "Antibiotics", ab == "NoAB" ~ "No Antibiotics"))
 
-## Appendix Table S10
-AppendixTableS10 <- total %>% 
+## Appendix S7 Table
+AppendixS7 <- total %>% 
   select(temp, rep, ab, proportion, count.x, adjCountCU, count.y, adjCountYFP, total)
 
 # Split data set by antibiotic condition
@@ -484,7 +483,7 @@ Fig4e <- ggplot(total_final_ab, aes(fill=gate, y=avg, x=temp)) +
         strip.background =element_blank(),
         strip.text.x = element_text(size = 16))
 
-# Format Figure 4e for use in Appendix Figure S6
+# Format Figure 4e for use in Appendix S8
 Fig4e1 <- ggplot(total_final_ab, aes(fill=gate, y=avg, x=temp)) + 
   geom_bar(position="stack", stat="identity") +
   scale_fill_manual(values = c("#de95c0","#C3D48A")) +
@@ -503,7 +502,7 @@ Fig4e1 <- ggplot(total_final_ab, aes(fill=gate, y=avg, x=temp)) +
         strip.background =element_blank(),
         strip.text.x = element_text(size = 16))
 
-# Figure 4h displaying genotype proportion in antibiotic - conditions, for use in Appendix Figure S6 
+# Figure 4h displaying genotype proportion in antibiotic - conditions, for use in Appendix S8
 Fig4h <- ggplot(total_final_noab, aes(fill=gate, y=avg, x=temp)) + 
   geom_bar(position="stack", stat="identity") +
   scale_fill_manual(values = c("#de95c0","#C3D48A")) +
@@ -667,24 +666,24 @@ Fig4dinset <- ggplot(data=Fig4ddata, aes(x=Temperature, y=Diff, color=Clone))+
 
 ## Figure 4d
 
-Clones <- unique(tpcs_exp$Clone)
-tpcs_exp <- tpcs_exp %>%
-  mutate(unique_rep=paste(tpcs_exp$Clone,".",tpcs_exp$Rep,sep="")) %>% 
+Clones <- unique(tpc_exp_pred$Clone)
+tpc_exp_pred <- tpc_exp_pred %>%
+  mutate(unique_rep=paste(tpc_exp_pred$Clone,".",tpc_exp_pred$Rep,sep="")) %>% 
   mutate(Clone = replace(Clone, Clone =="YFP_young", "AXS")) %>% 
   mutate(Clone = replace(Clone, Clone == "CU4106_young", "CU4106"))
 # Calculate r across temperatures and generate data set
-tpcs_exp <- tpcs_exp %>%
+tpc_exp_pred <- tpc_exp_pred %>%
   filter(Final>=1) %>%
   mutate(r = log(Final/Initial)) %>%
   group_by(Clone) %>%
   mutate(r_scale=10,
          log_r=log(r+r_scale)) %>%
   ungroup
-tpcs_exp = subset(tpcs_exp, select = -c(unique_rep) )
-tpcs_exp$Clone <- as.factor(tpcs_exp$Clone)
+tpc_exp_pred = subset(tpc_exp_pred, select = -c(unique_rep) )
+tpc_exp_pred$Clone <- as.factor(tpc_exp_pred$Clone)
 
 # Use nls.multstart package to fit the curve to TPC data
-TPC_fits_exp <- tpcs_exp %>%
+TPC_fits_exp <- tpc_exp_pred %>%
   group_by(Clone) %>%
   do(TPC_fit = nls_multstart(log_r ~ a + (E_a/(8.6*10^-5))*(1/298.15-1/(Temp+273.15)) - log(1+exp((E_d/(8.6*10^-5))*(1/Th-1/(Temp+273.15)))),
                              data = .,
@@ -707,7 +706,7 @@ TPC_eqn<-function(a, E_a, E_d, Th, Temperature, r_scale){exp(a + (E_a/(8.6*10^-5
 
 TPC_predicted_exp<-expand.grid(Clone=TPC_fits_exp$Clone, Temperature=seq(0, 50, length.out=500)) %>%
   left_join(dplyr::select(TPC_fits_exp, -TPC_fit)) %>%
-  left_join(distinct(dplyr::select(tpcs_exp, Clone, r_scale))) %>%
+  left_join(distinct(dplyr::select(tpc_exp_pred, Clone, r_scale))) %>%
   mutate(r=TPC_eqn(a, E_a, E_d, Th, Temperature, r_scale))
 
 TPC_summary_spread_exp<-TPC_predicted_exp %>%
@@ -766,9 +765,9 @@ Fig4 <- ggarrange(blank, Fig4d, Fig4e, Fig4f,
                   heights = c(1, 1, 1, 1, 1),
                   widths = c(1, 1, 1, 1, 1))
 print(Fig4)
-dev.off() 
+dev.off()
 
-# Finalize Appendix Figure S6
+# Finalize Appendix Figure S8
 Fig4appendix <- ggarrange(Fig4d, Fig4f, Fig4e1, Fig4h, 
                           ncol = 2, 
                           nrow = 2,
