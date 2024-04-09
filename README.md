@@ -1,5 +1,6 @@
 # TPC_evolution
 Repository of data and code for Liu et al. 2024
+bioRxiv link
 
 # Data
 -TPC_data.csv contains data for each experimental microcosm (1056 total representing 22 genotypes) with initial and final population counts, replicate ID, and genotype ("clone") name. 
@@ -12,3 +13,4 @@ Repository of data and code for Liu et al. 2024
 
 # Code
 
+-Liu_et_at_code.R contains code to reproduce Figures 2, Figures 3A-D, and Figures 4D-F. Code requires TPC_data.csv, two_clone_TPC.csv, and FlowCytData.csv to run.
