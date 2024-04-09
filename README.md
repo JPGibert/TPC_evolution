@@ -8,3 +8,4 @@ two_clone_TPC.csv contains updated data for the experimental microcosms of the t
 
 FlowCytData.csv contains all complied data from competition experiment using flow cytometry, as described under Results sub-section "Consequences of G × E: differential sorting of standing genetic variation across temperatures"
 
+Flow_Cyt_Data.zip contains all non-complied data from the described competition experiment above
