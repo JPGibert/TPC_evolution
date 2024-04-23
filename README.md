@@ -13,4 +13,4 @@ bioRxiv link
 
 # Code
 
--Liu_et_at_code.R contains code to reproduce Figures 2, Figures 3A-D, and Figures 4D-F. Code requires TPC_data.csv, two_clone_TPC.csv, and FlowCytData.csv to run.
+-Liu_et_at_code.R contains code to reproduce Figures 2, Figures 3A-G, and Figures 4D-F. Code requires TPC_data.csv, two_clone_TPC.csv, and FlowCytData.csv to run.
