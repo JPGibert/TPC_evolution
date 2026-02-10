@@ -3,6 +3,8 @@ Repository of data and code for Liu et al. 2024 (https://www.biorxiv.org/content
 
 Now published in Communications Biology (2026)
 
+[![DOI](https://zenodo.org/badge/760865233.svg)](https://doi.org/10.5281/zenodo.18602539)
+
 # Data
 -TPC_data.csv contains data for each experimental microcosm (1056 total representing 22 genotypes) with initial and final population counts, replicate ID, and genotype ("clone") name. 
 
